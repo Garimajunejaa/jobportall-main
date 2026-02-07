@@ -11,7 +11,11 @@ const app = express();
 import dotenv from 'dotenv';
 dotenv.config();
 
-// CORS is handled in index.js
+// CORS configuration
+app.use(cors({
+    origin: process.env.NODE_ENV === 'production' ? false : true,
+    credentials: true
+}));
 
 app.use(express.json());
 
