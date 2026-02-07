@@ -16,10 +16,9 @@ dotenv.config();
 app.use(express.json());
 
 app.use("/api/v1/user", userRouter);
-app.use("/api/v1/jobs", jobRouter);  // Add job routes
-app.use("/api/v1/application", applicationRouter);  // Add application routes
-app.use("/api/v1/job", jobRecommendationRouter);  // Add job recommendation routes
-app.use("/api/v1/company", companyRouter);  // Add company routes
+app.use("/api/v1/job", jobRouter);  // Changed from /jobs to /job to match frontend
+app.use("/api/v1/application", applicationRouter);
+app.use("/api/v1/company", companyRouter);
 
 
 // Error handling middleware

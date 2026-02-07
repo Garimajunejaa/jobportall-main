@@ -8,9 +8,11 @@ import {
     applyToJob,
     getAppliedJobs,
     getRecentApplications,
-    searchJobs
+    searchJobs,
+    getJobRecommendations
 } from "../controllers/job.controller.js";
-import { Job } from "../models/job.model.js";  // Change this line
+import { getJobRecommendations as getRecommendations } from "../controllers/jobRecommendation.controller.js";
+import { Job } from "../models/job.model.js";
 
 const router = express.Router();
 
@@ -28,6 +30,7 @@ router.get("/getadminjobs", isAuthenticated, getAdminJobs);
 router.post("/apply/:id", isAuthenticated, applyToJob);
 router.get("/applied", isAuthenticated, getAppliedJobs);
 router.get("/recent-applications", isAuthenticated, getRecentApplications);
+router.get("/recommendations", isAuthenticated, getRecommendations);
 
 // Filter route
 // ... existing imports ...
