@@ -29,7 +29,7 @@ export const register = async (req, res) => {
             });
         }
 
-        const user = await User.findOne({ email: email.toLowerCase() });
+        const user = await User.findOne({ email: email.toLowerCase() }).exec();
         if (user) {
             return res.status(400).json({
                 message: 'User already exists with this email.',
@@ -64,7 +64,7 @@ export const register = async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'None'
+            sameSite: 'Lax'
         });
 
         // Return success response without password
