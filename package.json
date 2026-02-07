@@ -25,6 +25,7 @@
     "datauri": "^4.0.0",
     "cloudinary": "^2.2.0",
     "express-fileupload": "^1.5.0",
+    "streamifier": "^0.1.1",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-label": "^2.0.2",
