@@ -101,10 +101,19 @@ export const register = async (req, res) => {
             }
         });
     } catch (error) {
-        console.error('Registration error:', error);
+        console.error('=== REGISTRATION ERROR ===');
+        console.error('Error type:', error.constructor.name);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        console.error('Environment check:');
+        console.error('- MONGODB_URI exists:', !!process.env.MONGODB_URI);
+        console.error('- SECRET_KEY exists:', !!process.env.SECRET_KEY);
+        console.error('- NODE_ENV:', process.env.NODE_ENV);
+        
         res.status(500).json({
             message: error.message || 'Registration failed',
-            success: false
+            success: false,
+            error: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
 }
