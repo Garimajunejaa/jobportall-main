@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "cd frontend && npm install && npm run build",
     "preview": "vite preview",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "echo 'Backend build complete'",
