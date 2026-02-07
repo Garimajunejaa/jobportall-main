@@ -8,10 +8,9 @@ import {
     applyToJob,
     getAppliedJobs,
     getRecentApplications,
-    searchJobs,
-    getJobRecommendations
+    searchJobs
 } from "../controllers/job.controller.js";
-import { getJobRecommendations as getRecommendations } from "../controllers/jobRecommendation.controller.js";
+import { getJobRecommendations } from "../controllers/jobRecommendation.controller.js";
 import { Job } from "../models/job.model.js";
 
 const router = express.Router();
@@ -23,6 +22,7 @@ router.get("/get/:id", getJobById);
 
 // Search and filter routes
 router.post("/search", searchJobs);
+router.post("/filter", searchJobs);
 
 // Protected routes
 router.post("/post", isAuthenticated, postJob);
@@ -30,7 +30,7 @@ router.get("/getadminjobs", isAuthenticated, getAdminJobs);
 router.post("/apply/:id", isAuthenticated, applyToJob);
 router.get("/applied", isAuthenticated, getAppliedJobs);
 router.get("/recent-applications", isAuthenticated, getRecentApplications);
-router.get("/recommendations", isAuthenticated, getRecommendations);
+router.get("/recommendations", isAuthenticated, getJobRecommendations);
 
 // Filter route
 // ... existing imports ...
