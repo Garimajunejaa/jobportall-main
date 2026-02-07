@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import { connectDB } from "./utils/db.js";
 import userRouter from "./routes/user.route.js";
 import jobRouter from "./routes/job.route.js";
 import applicationRouter from "./routes/application.route.js";
@@ -10,6 +11,9 @@ const app = express();
 
 import dotenv from 'dotenv';
 dotenv.config();
+
+// Connect to database
+connectDB();
 
 // CORS configuration
 app.use(cors({
