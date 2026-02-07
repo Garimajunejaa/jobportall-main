@@ -10,8 +10,28 @@ import mongoose from "mongoose";
 
 export const register = async (req, res) => {
     try {
+        console.log('=== REGISTRATION START ===');
+        console.log('Request body:', req.body);
+        
         const { fullname, email, phoneNumber, password, role } = req.body;
          
+        // Check environment variables
+        if (!process.env.MONGODB_URI) {
+            console.error('MONGODB_URI not set in environment');
+            return res.status(500).json({
+                message: "Database configuration error",
+                success: false
+            });
+        }
+        
+        if (!process.env.SECRET_KEY) {
+            console.error('SECRET_KEY not set in environment');
+            return res.status(500).json({
+                message: "Server configuration error", 
+                success: false
+            });
+        }
+        
         // Check only required fields
         if (!fullname || !email || !password || !role) {
             return res.status(400).json({

@@ -24,7 +24,23 @@ router.route("/applications").get(isAuthenticated, asyncHandler(getUserApplicati
 
 // Test route to verify backend is working
 router.route("/test").get((req, res) => {
-    res.json({ message: "Backend is working!", timestamp: new Date().toISOString() });
+    res.json({ 
+        message: "Backend is working!", 
+        timestamp: new Date().toISOString(),
+        env: process.env.NODE_ENV,
+        hasMongoUri: !!process.env.MONGODB_URI,
+        hasSecretKey: !!process.env.SECRET_KEY
+    });
+});
+
+// Debug route for registration
+router.route("/debug").get((req, res) => {
+    res.json({
+        message: "Debug info",
+        env: process.env.NODE_ENV,
+        mongoUri: process.env.MONGODB_URI ? "Set" : "Not set",
+        secretKey: process.env.SECRET_KEY ? "Set" : "Not set"
+    });
 });
 
 export default router;
