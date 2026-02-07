@@ -1,7 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import connectDB from "./utils/db.js";
 import userRoutes from './routes/user.route.js';
 import companyRoute from "./routes/company.route.js";
 import jobRoute from './routes/job.route.js';
@@ -70,9 +69,6 @@ app.use((err, req, res, next) => {
         message: err.message || 'Something went wrong!',
     });
 });
-
-// Connect to DB
-connectDB();
 
 // Export for Vercel
 export default app;
