@@ -96,8 +96,8 @@ const Signup = () => {
     return (
         <div className="min-h-screen bg-gradient-to-r from-blue-50 to-indigo-50">
             <Navbar />
-            <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form onSubmit={submitHandler} className='w-1/2 bg-white shadow-xl rounded-2xl p-8 my-10'>
+            <div className='flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 py-4 sm:py-8'>
+                <form onSubmit={submitHandler} className='w-full max-w-md sm:max-w-lg lg:max-w-xl bg-white shadow-xl rounded-2xl p-6 sm:p-8 my-6 sm:my-10'>
                     <h1 className='text-3xl font-bold text-gray-800 text-center mb-8'>Create Your Account</h1>
                     <div className='space-y-2 mb-6'>
                         <Label className="text-sm font-medium text-gray-700">Full Name</Label>
