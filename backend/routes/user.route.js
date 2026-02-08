@@ -33,6 +33,16 @@ router.route("/test").get((req, res) => {
     });
 });
 
+// Simple test route (no database)
+router.route("/simple-test").get((req, res) => {
+    res.json({
+        message: "Simple test - working!",
+        timestamp: new Date().toISOString(),
+        method: req.method,
+        url: req.url
+    });
+});
+
 // Debug route for registration
 router.route("/debug").get((req, res) => {
     res.json({
