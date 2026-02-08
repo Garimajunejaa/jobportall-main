@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import getDataUri from "../utils/datauri.js";
 import mongoose from "mongoose";
+import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
     try {
@@ -228,34 +229,23 @@ export const updateProfile = async (req, res) => {
             }
 
             try {
-                // Create uploads directory if it doesn't exist
-                const uploadsDir = path.join(process.cwd(), 'uploads');
-                if (!fs.existsSync(uploadsDir)) {
-                    fs.mkdirSync(uploadsDir, { recursive: true });
-                    console.log('Created uploads directory:', uploadsDir);
-                }
-
-                // Generate unique filename to avoid conflicts
-                const timestamp = Date.now();
-                const randomString = Math.random().toString(36).substring(2, 8);
-                const uniqueFilename = `${timestamp}_${randomString}_${req.file.originalname}`;
-                const filePath = path.join(uploadsDir, uniqueFilename);
-
-                // Save file to local filesystem
-                fs.writeFileSync(filePath, req.file.buffer);
-                console.log('File saved locally:', filePath);
-
-                // Store file path in database
-                const fileUrl = `/api/v1/files/${uniqueFilename}`;
+                // Upload file to Cloudinary instead of local storage
+                const fileUri = getDataUri(req.file);
+                const mycloud = await cloudinary.uploader.upload(fileUri.content, {
+                    resource_type: req.file.mimetype === 'application/pdf' ? 'raw' : 'auto',
+                    folder: 'jobportal/resumes'
+                });
+                
+                console.log('File uploaded to Cloudinary:', mycloud.secure_url);
                 
                 // Update resume or profile photo based on mimetype
                 if (req.file.mimetype === 'application/pdf') {
-                    user.profile.resume = fileUrl;
+                    user.profile.resume = mycloud.secure_url;
                     user.profile.resumeOriginalName = req.file.originalname;
-                    console.log('Resume updated:', fileUrl);
+                    console.log('Resume updated:', mycloud.secure_url);
                 } else {
-                    user.profile.profilePhoto = fileUrl;
-                    console.log('Profile photo updated:', fileUrl);
+                    user.profile.profilePhoto = mycloud.secure_url;
+                    console.log('Profile photo updated:', mycloud.secure_url);
                 }
             } catch (fileError) {
                 console.log('ERROR: File save failed:', fileError);
