@@ -37,3 +37,5 @@ app.use((err, req, res, next) => {
         message: err.message || 'Something went wrong!',
     });
 });
+
+export default app;
