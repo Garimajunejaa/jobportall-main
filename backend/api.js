@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { connectDB } from "./utils/db.js";
 import userRoutes from './routes/user.route.js';
 import companyRoute from "./routes/company.route.js";
 import jobRoute from './routes/job.route.js';
@@ -11,23 +12,22 @@ import fileRoute from "./routes/file.route.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import fs from 'fs';
+import dotenv from 'dotenv';
 
 // Get current directory for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Load environment variables for Vercel deployment
-try {
-    const { default: dotenv } = await import('dotenv');
-    dotenv.config({ path: path.resolve(__dirname, '../.env') });
-    console.log('Environment loaded:', {
-        MONGODB_URI: process.env.MONGODB_URI ? 'SET' : 'NOT SET',
-        SECRET_KEY: process.env.SECRET_KEY ? 'SET' : 'NOT SET',
-        NODE_ENV: process.env.NODE_ENV
-    });
-} catch (error) {
-    console.log('Dotenv not available, using Vercel env vars');
-}
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+console.log('Environment loaded:', {
+    MONGODB_URI: process.env.MONGODB_URI ? 'SET' : 'NOT SET',
+    SECRET_KEY: process.env.SECRET_KEY ? 'SET' : 'NOT SET',
+    NODE_ENV: process.env.NODE_ENV
+});
+
+// Connect to database
+connectDB();
 
 const app = express();
 
